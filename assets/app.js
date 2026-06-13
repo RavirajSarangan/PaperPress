@@ -786,7 +786,10 @@ on('img2pdf-run', 'click', async () => {
       setStatus('img2pdf', `Adding page ${i + 1} of ${files.length}…`, 'busy', Math.round(((i + 1) / files.length) * 100));
     }
     const out = await doc.save();
-    download(out, 'images.pdf', 'application/pdf');
+    const outName = files.length === 1
+      ? files[0].file.name.replace(/\.[^.]+$/, '') + '.pdf'
+      : 'images.pdf';
+    download(out, outName, 'application/pdf');
     setStatus('img2pdf', `Done — ${files.length}-page PDF downloaded (${fmtSize(out.length)}).`, 'ok');
   } catch (err) {
     console.error(err);
@@ -826,6 +829,7 @@ on('pdf2img-run', 'click', async () => {
       card.innerHTML = `<img alt="Page ${p}"><a download="${baseName}-page-${p}.${ext}">Page ${p} ↓</a>`;
       card.querySelector('img').src = url;
       card.querySelector('a').href = url;
+      setTimeout(() => URL.revokeObjectURL(url), 120000);
       grid.appendChild(card);
 
       setStatus('pdf2img', `Rendering page ${p} of ${pdf.numPages}…`, 'busy', Math.round((p / pdf.numPages) * 100));
@@ -966,18 +970,26 @@ async function buildOrganizeThumbnails() {
   setStatus('organize', 'Building page previews…', 'busy', 0, true);
   try {
     const pdf = await openPdf(entry.buffer);
-    const max = Math.min(pdf.numPages, 100);
-    for (let p = 1; p <= max; p++) {
+    const total = pdf.numPages;
+    if (total > 300) {
+      setStatus('organize', `This PDF has ${total} pages — Organize supports up to 300. Use the Split tool to break it into sections first.`, 'err');
+      return;
+    }
+    let thumbScale;
+    if (total > 150) thumbScale = 0.2;
+    else if (total > 80) thumbScale = 0.3;
+    else thumbScale = 0.4;
+    const thumbQ = total > 150 ? 0.5 : 0.7;
+    for (let p = 1; p <= total; p++) {
       const page = await pdf.getPage(p);
-      const vp = page.getViewport({ scale: 0.4 });
+      const vp = page.getViewport({ scale: thumbScale });
       const canvas = document.createElement('canvas');
       canvas.width = vp.width; canvas.height = vp.height;
       await page.render({ canvasContext: canvas.getContext('2d'), viewport: vp }).promise;
-      organizePages.push({ srcIndex: p - 1, rotation: 0, deleted: false, thumbUrl: canvas.toDataURL('image/jpeg', 0.7) });
-      setStatus('organize', `Preview ${p} of ${max}…`, 'busy', Math.round((p / max) * 100));
+      organizePages.push({ srcIndex: p - 1, rotation: 0, deleted: false, thumbUrl: canvas.toDataURL('image/jpeg', thumbQ) });
+      setStatus('organize', `Preview ${p} of ${total}…`, 'busy', Math.round((p / total) * 100));
     }
-    if (pdf.numPages > 100) setStatus('organize', `Showing first 100 of ${pdf.numPages} pages.`, '');
-    else setStatus('organize', 'Reorder with arrows, rotate with ⟳, remove with ✕ — then save.', '');
+    setStatus('organize', 'Reorder with arrows, rotate with ⟳, remove with ✕ — then save.', '');
     renderOrganizeGrid();
   } catch (err) {
     console.error(err);
@@ -1039,7 +1051,15 @@ on('watermark-run', 'click', async () => {
   const entry = state.watermark[0];
   const text = sanitizeLatin($('watermark-text').value.trim());
   const style = $('watermark-style').value;
-  const opacity = parseFloat($('watermark-opacity').value);
+  const opacity = Number.parseFloat($('watermark-opacity').value);
+  const WM_COLORS = {
+    grey:  rgb(0.45, 0.45, 0.5),
+    red:   rgb(0.78, 0.08, 0.08),
+    blue:  rgb(0.08, 0.18, 0.78),
+    green: rgb(0.08, 0.45, 0.08),
+    black: rgb(0.05, 0.05, 0.05),
+  };
+  const wmColor = WM_COLORS[$('watermark-color')?.value] || WM_COLORS.grey;
   if (!text) { setStatus('watermark', 'Enter the watermark text first.', 'err'); return; }
   try {
     setStatus('watermark', 'Applying watermark…', 'busy', 0, true);
@@ -1052,11 +1072,12 @@ on('watermark-run', 'click', async () => {
       if (style === 'diag') {
         const size = Math.min(width, height) / (text.length > 14 ? 12 : 8) + 18;
         const tw = font.widthOfTextAtSize(text, size);
+        const ascent = size * 0.72;
         page.drawText(text, {
-          x: width / 2 - (tw / 2) * 0.707,
-          y: height / 2 - (tw / 2) * 0.707,
+          x: width / 2 + (ascent - tw) * 0.5 * 0.707,
+          y: height / 2 - (ascent + tw) * 0.5 * 0.707,
           size, font,
-          color: rgb(0.45, 0.45, 0.5),
+          color: wmColor,
           opacity,
           rotate: degrees(45),
         });
@@ -1066,8 +1087,8 @@ on('watermark-run', 'click', async () => {
         page.drawText(text, {
           x: width - tw - 28, y: 20,
           size, font,
-          color: rgb(0.45, 0.45, 0.5),
-          opacity: Math.min(opacity * 2.2, 0.9),
+          color: wmColor,
+          opacity,
         });
       }
       setStatus('watermark', `Stamping page ${i + 1} of ${pages.length}…`, 'busy', Math.round(((i + 1) / pages.length) * 100));
@@ -1088,25 +1109,32 @@ on('pagenum-run', 'click', async () => {
   const format = $('pagenum-format').value;
   const pos = $('pagenum-pos').value;
   const start = parseInt($('pagenum-start').value, 10) || 1;
+  const size = Number.parseInt($('pagenum-size')?.value || '10', 10);
+  const skip1 = $('pagenum-skip1')?.value === 'yes';
   try {
     setStatus('pagenum', 'Adding page numbers…', 'busy', 0, true);
     const doc = await PDFDocument.load(entry.buffer, { ignoreEncryption: true });
     const font = await doc.embedFont(StandardFonts.Helvetica);
     const pages = doc.getPages();
     const total = pages.length;
-    const size = 10;
+    const lastNum = start + total - (skip1 ? 2 : 1);
 
     pages.forEach((page, i) => {
-      const n = start + i;
-      const label = format === 'ofN' ? `Page ${n} of ${start + total - 1}`
-                  : format === 'dash' ? `— ${n} —`
-                  : String(n);
+      if (skip1 && i === 0) return;
+      const n = skip1 ? start + i - 1 : start + i;
+      let label;
+      if (format === 'ofN') label = `Page ${n} of ${lastNum}`;
+      else if (format === 'dash') label = `— ${n} —`;
+      else label = String(n);
       const { width, height } = page.getSize();
       const tw = font.widthOfTextAtSize(label, size);
       let x, y;
-      if (pos === 'bc') { x = (width - tw) / 2; y = 24; }
-      else if (pos === 'br') { x = width - tw - 32; y = 24; }
-      else { x = width - tw - 32; y = height - 30; }
+      if (pos === 'bc')      { x = (width - tw) / 2; y = 24; }
+      else if (pos === 'br') { x = width - tw - 32;   y = 24; }
+      else if (pos === 'bl') { x = 32;                y = 24; }
+      else if (pos === 'tc') { x = (width - tw) / 2; y = height - 30; }
+      else if (pos === 'tr') { x = width - tw - 32;   y = height - 30; }
+      else                   { x = 32;                y = height - 30; }
       page.drawText(label, { x, y, size, font, color: rgb(0.25, 0.27, 0.32) });
       setStatus('pagenum', `Numbering page ${i + 1} of ${total}…`, 'busy', Math.round(((i + 1) / total) * 100));
     });
@@ -1145,27 +1173,37 @@ on('metadata-run', 'click', async () => {
 on('text2pdf-run', 'click', async () => {
   const raw = $('text2pdf-text').value;
   const title = $('text2pdf-title').value.trim();
-  const fontSize = parseInt($('text2pdf-fontsize').value, 10);
+  const fontSize = Number.parseInt($('text2pdf-fontsize').value, 10);
   const fontChoice = $('text2pdf-font').value;
+  const pageSizeKey = $('text2pdf-pagesize')?.value || 'a4';
+  const spacingMult = Number.parseFloat($('text2pdf-spacing')?.value || '1.55');
   if (!raw.trim()) { setStatus('text2pdf', 'Type or paste some text first.', 'err'); return; }
+  if (/[^\x00-\xFF]/.test(raw + title)) {
+    setStatus('text2pdf', 'Your text contains characters outside the Latin range (Tamil, Sinhala, Arabic, CJK…) which would appear as "?" in the PDF. For those scripts, use the OCR tool\'s .docx export instead.', 'err');
+    return;
+  }
   try {
     setStatus('text2pdf', 'Creating PDF…', 'busy', null, true);
     const doc = await PDFDocument.create();
     const font = await doc.embedFont(StandardFonts[fontChoice]);
     const boldName = fontChoice === 'TimesRoman' ? 'TimesRomanBold' : fontChoice + 'Bold';
     const bold = await doc.embedFont(StandardFonts[boldName]);
-    const [PW, PH] = PAGE_SIZES.a4;
+    const [PW, PH] = PAGE_SIZES[pageSizeKey];
     const margin = 56;
     const maxW = PW - margin * 2;
-    const lineH = fontSize * 1.55;
+    const lineH = fontSize * spacingMult;
 
     const lines = wrapText(font, sanitizeLatin(raw), fontSize, maxW);
 
     let page = doc.addPage([PW, PH]);
-    let y = PH - margin;
+    let y = PH - margin - 18;
     if (title) {
-      page.drawText(sanitizeLatin(title), { x: margin, y: y - 18, size: fontSize + 6, font: bold, color: rgb(0.08, 0.09, 0.12) });
-      y -= 18 + (fontSize + 6) * 1.2;
+      const titleLines = wrapText(bold, sanitizeLatin(title), fontSize + 6, maxW);
+      for (const tl of titleLines) {
+        page.drawText(tl, { x: margin, y, size: fontSize + 6, font: bold, color: rgb(0.08, 0.09, 0.12) });
+        y -= (fontSize + 6) * 1.3;
+      }
+      y -= 8;
     }
     for (const line of lines) {
       if (y - lineH < margin) { page = doc.addPage([PW, PH]); y = PH - margin; }

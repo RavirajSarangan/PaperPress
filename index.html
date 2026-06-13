@@ -494,6 +494,16 @@
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Create PDF',       proc:'Building PDF — 0 KB uploaded',
       done:'notes.pdf downloaded!',                 detail:'3 pages · 48 KB · Private' },
+    { url:'word-to-pdf',      label:'Word to PDF',
+      t1:'DOC', f1:'proposal.docx',     s1:'220 KB · 8 pages',
+      t2:'',    f2:'',                  s2:'',                    two:false,
+      btn:'Convert to PDF',  proc:'Converting Word — 0 KB uploaded',
+      done:'proposal.pdf downloaded!',              detail:'8 pages · 310 KB · Private' },
+    { url:'pdf-to-word',      label:'PDF to Word',
+      t1:'PDF', f1:'contract.pdf',      s1:'1.2 MB · 6 pages',
+      t2:'',    f2:'',                  s2:'',                    two:false,
+      btn:'Convert to Word', proc:'Converting PDF — 0 KB uploaded',
+      done:'contract.docx downloaded!',             detail:'6 pages · 185 KB · Private' },
   ];
 
   var idx    = 0;
@@ -512,14 +522,21 @@
   var doneEl = document.getElementById('dw-done-msg');
   var detEl  = document.getElementById('dw-done-detail');
 
+  var TYPE_COLOR = { PDF:'#1f4fd8', JPG:'#ea580c', TXT:'#16a34a', DOC:'#7c3aed' };
+  function badgeColor(type) { return TYPE_COLOR[type] || '#1f4fd8'; }
+
   function apply(t) {
     if (!urlEl) return;
     urlEl.textContent  = 'paper-press-three.vercel.app/tools/' + t.url;
     if (lblEl) lblEl.textContent = t.label;
-    if (t0El)  t0El.textContent  = t.t1;
-    t1El.textContent   = t.t1;  f1El.textContent = t.f1;  s1El.textContent = t.s1;
+    var c1 = badgeColor(t.t1);
+    if (t0El)  { t0El.textContent = t.t1; t0El.style.background = c1; }
+    t1El.textContent = t.t1; t1El.style.background = c1;
+    f1El.textContent = t.f1;  s1El.textContent = t.s1;
     row2.style.display = t.two ? '' : 'none';
-    t2El.textContent   = t.t2;  f2El.textContent = t.f2;  s2El.textContent = t.s2;
+    var c2 = badgeColor(t.t2);
+    t2El.textContent = t.t2; t2El.style.background = c2;
+    f2El.textContent = t.f2;  s2El.textContent = t.s2;
     runEl.textContent  = t.btn;
     procEl.textContent = t.proc;
     doneEl.textContent = t.done;

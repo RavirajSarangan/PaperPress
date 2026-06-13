@@ -12,23 +12,24 @@ const workerReady = (async () => {
 })();
 
 /* ── Lazy library loading (expensive deps only on demand) ── */
-const lazyLibs = { tesseract: false, html2canvas: false, jspdf: false, docxpreview: false };
+const lazyLibs = { tesseract: false, jspdf: false, docxpreview: false };
 const lazyPromises = {};
 async function ensureLib(name) {
-  if (!lazyLibs.hasOwnProperty(name)) return true;
+  if (!Object.prototype.hasOwnProperty.call(lazyLibs, name)) return true;
   if (lazyLibs[name]) return true;
-  const windowKeys = { jspdf: 'jspdf', html2canvas: 'html2canvas', tesseract: 'Tesseract', docxpreview: 'docx' };
+  const windowKeys = { jspdf: 'jspdf', tesseract: 'Tesseract', docxpreview: 'docx' };
   if (window[windowKeys[name]]) { lazyLibs[name] = true; return true; }
   if (lazyPromises[name]) return lazyPromises[name];
-  const urls = {
-    tesseract: 'https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.5/tesseract.min.js',
-    html2canvas: 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
-    jspdf: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
-    docxpreview: 'https://cdn.jsdelivr.net/npm/docx-preview@0.3.7/dist/docx-preview.min.js',
+  const CDN = {
+    tesseract:   { src: 'https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.5/tesseract.min.js',      sri: 'sha384-sZlPHqJ8Pk1GMyFXfg9vOgDjyUZZe7wE2c0NoPg2z1vs2fmI4wOC0O1ONVyr73qa' },
+    jspdf:       { src: 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',             sri: 'sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk' },
+    docxpreview: { src: 'https://cdn.jsdelivr.net/npm/docx-preview@0.3.7/dist/docx-preview.min.js',        sri: 'sha384-Fw+ZM2MtvxCe867uRzZY5GtGP+gs0NLvrlJS768RZWuKhOHMN4Fln3i3gMt1NSyQ' },
   };
   lazyPromises[name] = new Promise(resolve => {
     const s = document.createElement('script');
-    s.src = urls[name];
+    s.src = CDN[name].src;
+    s.integrity = CDN[name].sri;
+    s.crossOrigin = 'anonymous';
     s.onload = () => { lazyLibs[name] = true; resolve(true); };
     s.onerror = () => { console.warn(`Failed to load ${name}`); resolve(false); };
     document.head.appendChild(s);

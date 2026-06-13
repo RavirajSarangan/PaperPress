@@ -365,6 +365,13 @@
     box-shadow: 0 12px 48px rgba(31,79,216,.1), 0 2px 8px rgba(0,0,0,.06);
     overflow: hidden; user-select: none;
   }
+  .dw-label-bar { text-align: center; margin-bottom: 8px; }
+  .dw-current-tool {
+    font-size: 11px; font-weight: 700; letter-spacing: .8px;
+    text-transform: uppercase; color: var(--press-blue);
+    background: rgba(31,79,216,.09); padding: 3px 12px; border-radius: 20px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
   .dw-chrome {
     background: #f0f1f3; border-bottom: 1px solid var(--line);
     padding: 10px 14px; display: flex; align-items: center; gap: 10px;
@@ -445,7 +452,7 @@
   }
 
   /* Phase 2 — File list + button (22%–52%) */
-  .dw-file-list { gap: 8px; width: 100%; animation: dw-ph2 9s 1s infinite; }
+  .dw-file-list { gap: 8px; animation: dw-ph2 9s 1s infinite; }
   @keyframes dw-ph2 {
     0%,22%{ opacity:0; } 27%{ opacity:1; } 50%{ opacity:1; } 55%{ opacity:0; } 100%{ opacity:0; }
   }

@@ -55,7 +55,7 @@
   <text x="980" y="94" font-family="Arial,sans-serif" font-size="22" font-weight="700" fill="white" text-anchor="middle" letter-spacing="1">✕ NO UPLOAD EVER</text>
 
   <!-- URL -->
-  <text x="60" y="585" font-family="Arial,sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">paperpress.venomxtechnology.com</text>
+  <text x="60" y="585" font-family="Arial,sans-serif" font-size="22" fill="rgba(255,255,255,0.5)">paper-press-three.vercel.app</text>
 
   <!-- Divider line -->
   <rect x="60" y="555" width="1080" height="1.5" fill="rgba(255,255,255,0.12)"/>

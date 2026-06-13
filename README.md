@@ -14,14 +14,14 @@
 
 ## Live Site
 
-[paperpress.venomxtechnology.com](https://paperpress.venomxtechnology.com)
+[paper-press-three.vercel.app](https://paper-press-three.vercel.app)
 
 ---
 
 ## Tools
 
 | Tool | Status |
-|---|---|
+| --- | --- |
 | Word to PDF | Coming Soon |
 | PDF to Word | Coming Soon |
 | OCR Scan to Text (English, Tamil & Sinhala) | Live |
@@ -58,7 +58,7 @@ Your files are processed entirely on your own machine. PaperPress has no backend
 
 ## Project Structure
 
-```
+```text
 paperpress/
 ├── index.html          # Home page — tool grid
 ├── assets/

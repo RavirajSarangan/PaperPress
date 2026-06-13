@@ -166,6 +166,7 @@
       </ol>
     </div>
     <div class="demo-window" aria-hidden="true">
+      <div class="dw-label-bar"><span id="dw-tool-label" class="dw-current-tool">Merge PDF</span></div>
       <div class="dw-chrome">
         <div class="dw-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
         <div id="dw-url" class="dw-url">paper-press-three.vercel.app/tools/merge-pdf</div>
@@ -498,6 +499,7 @@
   var idx    = 0;
   var urlEl  = document.getElementById('dw-url');
   var lblEl  = document.getElementById('dw-tool-label');
+  var t0El   = document.getElementById('dw-t0');
   var t1El   = document.getElementById('dw-t1');
   var f1El   = document.getElementById('dw-f1');
   var s1El   = document.getElementById('dw-s1');
@@ -514,6 +516,7 @@
     if (!urlEl) return;
     urlEl.textContent  = 'paper-press-three.vercel.app/tools/' + t.url;
     if (lblEl) lblEl.textContent = t.label;
+    if (t0El)  t0El.textContent  = t.t1;
     t1El.textContent   = t.t1;  f1El.textContent = t.f1;  s1El.textContent = t.s1;
     row2.style.display = t.two ? '' : 'none';
     t2El.textContent   = t.t2;  f2El.textContent = t.f2;  s2El.textContent = t.s2;

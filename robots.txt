@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://paperpress.venomxtechnology.com/sitemap.xml
+Sitemap: https://paper-press-three.vercel.app/sitemap.xml

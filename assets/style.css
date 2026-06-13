@@ -262,12 +262,21 @@
   .faq details[open] summary::after { transform: rotate(45deg); }
   .faq details p { margin-top: 10px; font-size: 13.5px; color: var(--muted); line-height: 1.65; }
 
-  footer { border-top: 1px solid var(--line); background: var(--sheet); padding: 28px 24px; text-align: center; }
-  footer .credit { font-family: 'Space Grotesk'; font-weight: 700; font-size: 15px; }
+  footer { border-top: 1px solid var(--line); background: var(--sheet); padding: 40px 24px 32px; }
+  footer .credit { font-family: 'Space Grotesk'; font-weight: 700; font-size: 15px; text-align: center; }
   footer .credit a { color: var(--press-blue); text-decoration: none; }
   footer .credit a:hover { text-decoration: underline; }
-  footer .small { margin-top: 8px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+  footer .small { margin-top: 8px; font-size: 12px; color: var(--muted); line-height: 1.6; text-align: center; }
   footer .small b { color: var(--ink); font-weight: 600; }
+  .footer-inner { max-width: 1080px; margin: 0 auto; display: grid; gap: 20px; }
+  .footer-brand { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .footer-brand a { color: var(--press-blue); text-decoration: none; }
+  .footer-brand a:hover { text-decoration: underline; }
+  .footer-logo { width: 32px; height: 32px; border-radius: 8px; background: var(--press-blue); color: #fff; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 18px; display: grid; place-items: center; flex-shrink: 0; }
+  .footer-nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+  .footer-nav a { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .footer-nav a:hover { color: var(--press-blue); }
+  .footer-note { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
   @media (max-width: 720px) {
     .tabs { grid-template-columns: repeat(2, 1fr); }

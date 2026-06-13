@@ -157,16 +157,20 @@
 <section class="demo-band" aria-label="How PaperPress works">
   <div class="demo-inner">
     <div class="demo-copy">
-      <h2>Drop, click, download.</h2>
-      <p>Every tool works the same three-step way — no account, no upload, no waiting for a server.</p>
+      <div class="demo-tool-badge">
+        <span id="demo-tool-num" class="demo-badge-num">1 of 13</span>
+        <span id="dw-tool-label" class="demo-badge-name">Merge PDF</span>
+      </div>
+      <h2 id="demo-h2">Merge PDFs in seconds</h2>
+      <p id="demo-sub">Combine multiple PDFs into one — set the order, click merge.</p>
       <ol class="demo-steps-list">
         <li class="ds-1"><strong>Drop</strong> your file onto the tray or click to browse</li>
         <li class="ds-2"><strong>Click</strong> the action button</li>
         <li class="ds-3"><strong>Download</strong> — the result saves to your device instantly</li>
       </ol>
+      <a id="demo-cta" class="demo-cta-btn" href="tools/merge-pdf.html">Try Merge PDF →</a>
     </div>
     <div class="demo-window" aria-hidden="true">
-      <div class="dw-label-bar"><span id="dw-tool-label" class="dw-current-tool">Merge PDF</span></div>
       <div class="dw-chrome">
         <div class="dw-dots"><span class="r"></span><span class="y"></span><span class="g"></span></div>
         <div id="dw-url" class="dw-url">paper-press-three.vercel.app/tools/merge-pdf</div>
@@ -175,7 +179,7 @@
         <!-- Phase 1: empty tray -->
         <div class="dw-tray">
           <div class="dw-mini-doc"><div class="dw-mini-fold"></div></div>
-          <div class="dw-tray-label">Drop PDFs here</div>
+          <div id="dw-tray-label" class="dw-tray-label">Drop PDFs here</div>
           <div class="dw-tray-sub">or <b>browse files</b></div>
         </div>
         <!-- Floating file dropping in -->
@@ -210,6 +214,9 @@
           <div id="dw-done-msg" class="dw-done-msg">merged.pdf downloaded!</div>
           <div id="dw-done-detail" class="dw-done-detail">12 pages · 1.9 MB · Private</div>
         </div>
+      </div>
+      <div class="dw-footer-bar">
+        <div class="dw-prog-track"><div id="dw-prog-fill" class="dw-prog-fill"></div></div>
       </div>
     </div>
   </div>
@@ -440,103 +447,170 @@
 (function () {
   var TOOLS = [
     { url:'merge-pdf',         label:'Merge PDF',
+      h2:'Merge PDFs in seconds',
+      sub:'Combine multiple PDFs into one — drag to set the order, then click merge.',
+      tray:'Drop PDFs here',
       t1:'PDF', f1:'contract.pdf',      s1:'1.2 MB · 4 pages',
       t2:'PDF', f2:'appendix.pdf',      s2:'856 KB · 8 pages',   two:true,
       btn:'Merge PDFs',       proc:'Merging — 0 KB uploaded',
       done:'merged.pdf downloaded!',                detail:'12 pages · 1.9 MB · Private' },
     { url:'compress-pdf',      label:'Compress PDF',
+      h2:'Shrink by up to 80%',
+      sub:'Reduce PDF file size without sacrificing readability. Nothing leaves your device.',
+      tray:'Drop your PDF here',
       t1:'PDF', f1:'annual-report.pdf', s1:'8.4 MB · 24 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Compress PDF',     proc:'Compressing — 0 KB uploaded',
-      done:'annual-report-compressed.pdf downloaded!',            detail:'2.1 MB — 75% smaller · Private' },
+      done:'annual-report-compressed.pdf downloaded!', detail:'2.1 MB — 75% smaller · Private' },
     { url:'ocr-pdf',           label:'OCR Scan to Text',
+      h2:'Extract text from any scan',
+      sub:'OCR in English, Tamil & Sinhala — runs entirely on your device, no cloud wait.',
+      tray:'Drop your scanned PDF',
       t1:'PDF', f1:'scan.pdf',          s1:'3.2 MB · 6 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Extract Text',     proc:'Recognising text — 0 KB uploaded',
-      done:'ocr-text.txt downloaded!',              detail:'2,840 characters · English · Private' },
+      done:'ocr-text.txt downloaded!',  detail:'2,840 characters · English · Private' },
     { url:'jpg-to-pdf',        label:'Images to PDF',
+      h2:'Photos → PDF instantly',
+      sub:'Select multiple images and build a clean, single PDF document in seconds.',
+      tray:'Drop images here',
       t1:'JPG', f1:'photo1.jpg',        s1:'2.1 MB',
       t2:'JPG', f2:'photo2.jpg',        s2:'1.8 MB',              two:true,
       btn:'Build PDF',        proc:'Building PDF — 0 KB uploaded',
-      done:'images.pdf downloaded!',                detail:'2 pages · 3.4 MB · Private' },
+      done:'images.pdf downloaded!',    detail:'2 pages · 3.4 MB · Private' },
     { url:'split-pdf',         label:'Split PDF',
+      h2:'Pull out exactly the pages you need',
+      sub:'Extract any page range from a large PDF — no quality loss, one click.',
+      tray:'Drop your PDF here',
       t1:'PDF', f1:'thesis.pdf',        s1:'4.7 MB · 48 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Extract Pages',    proc:'Extracting pages — 0 KB uploaded',
-      done:'thesis-pages.pdf downloaded!',          detail:'Pages 1–10 · 1.1 MB · Private' },
+      done:'thesis-pages.pdf downloaded!', detail:'Pages 1–10 · 1.1 MB · Private' },
     { url:'watermark-pdf',     label:'Watermark PDF',
+      h2:'Brand or protect every page',
+      sub:'Stamp a custom text watermark across all pages — pick the font, size and opacity.',
+      tray:'Drop your PDF here',
       t1:'PDF', f1:'invoice.pdf',       s1:'340 KB · 2 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Add Watermark',    proc:'Stamping watermark — 0 KB uploaded',
-      done:'invoice-watermarked.pdf downloaded!',   detail:'CONFIDENTIAL · 2 pages · Private' },
+      done:'invoice-watermarked.pdf downloaded!', detail:'CONFIDENTIAL · 2 pages · Private' },
     { url:'pdf-to-jpg',        label:'PDF to Images',
+      h2:'PDF pages → crisp images',
+      sub:'Export every page as a high-resolution PNG or JPG — great for presentations.',
+      tray:'Drop your PDF here',
       t1:'PDF', f1:'slides.pdf',        s1:'5.6 MB · 16 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Export Images',    proc:'Rendering pages — 0 KB uploaded',
-      done:'slides-images.zip downloaded!',         detail:'16 PNG images · 12.3 MB · Private' },
+      done:'slides-images.zip downloaded!', detail:'16 PNG images · 12.3 MB · Private' },
     { url:'add-page-numbers',  label:'Page Numbers',
+      h2:'Number your pages in seconds',
+      sub:'Add page numbers to any corner with the position and font size of your choice.',
+      tray:'Drop your PDF here',
       t1:'PDF', f1:'manuscript.pdf',    s1:'1.1 MB · 32 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Add Numbers',      proc:'Numbering pages — 0 KB uploaded',
-      done:'manuscript-numbered.pdf downloaded!',   detail:'32 pages numbered · Private' },
+      done:'manuscript-numbered.pdf downloaded!', detail:'32 pages numbered · Private' },
     { url:'organize-pdf',      label:'Organize Pages',
+      h2:'Rearrange pages freely',
+      sub:"Drag pages into any order, delete what you don't need, then save a new PDF.",
+      tray:'Drop your PDF here',
       t1:'PDF', f1:'report-draft.pdf',  s1:'2.8 MB · 20 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Save New PDF',     proc:'Assembling PDF — 0 KB uploaded',
-      done:'report-draft-organized.pdf downloaded!',detail:'18 pages · 2.5 MB · Private' },
+      done:'report-draft-organized.pdf downloaded!', detail:'18 pages · 2.5 MB · Private' },
     { url:'edit-pdf-metadata', label:'Edit Metadata',
+      h2:"Fix your PDF's identity",
+      sub:'Update the title, author, subject and keywords stored inside the file.',
+      tray:'Drop your PDF here',
       t1:'PDF', f1:'whitepaper.pdf',    s1:'980 KB · 14 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Save Metadata',    proc:'Saving metadata — 0 KB uploaded',
-      done:'whitepaper-meta.pdf downloaded!',       detail:'Metadata updated · Private' },
+      done:'whitepaper-meta.pdf downloaded!', detail:'Metadata updated · Private' },
     { url:'text-to-pdf',       label:'Text to PDF',
+      h2:'Plain text → clean PDF',
+      sub:'Paste or type your content and download a neatly formatted PDF in one click.',
+      tray:'Drop your .txt file here',
       t1:'TXT', f1:'notes.txt',         s1:'12 KB',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Create PDF',       proc:'Building PDF — 0 KB uploaded',
-      done:'notes.pdf downloaded!',                 detail:'3 pages · 48 KB · Private' },
+      done:'notes.pdf downloaded!',     detail:'3 pages · 48 KB · Private' },
     { url:'word-to-pdf',      label:'Word to PDF',
+      h2:'Word docs → PDF fast',
+      sub:'Convert .docx files to PDF with all formatting preserved. Coming soon.',
+      tray:'Drop your .docx here',
       t1:'DOC', f1:'proposal.docx',     s1:'220 KB · 8 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Convert to PDF',  proc:'Converting Word — 0 KB uploaded',
-      done:'proposal.pdf downloaded!',              detail:'8 pages · 310 KB · Private' },
+      done:'proposal.pdf downloaded!',  detail:'8 pages · 310 KB · Private' },
     { url:'pdf-to-word',      label:'PDF to Word',
+      h2:'Edit any PDF as a Word doc',
+      sub:'Turn a PDF into an editable .docx document in seconds. Coming soon.',
+      tray:'Drop your PDF here',
       t1:'PDF', f1:'contract.pdf',      s1:'1.2 MB · 6 pages',
       t2:'',    f2:'',                  s2:'',                    two:false,
       btn:'Convert to Word', proc:'Converting PDF — 0 KB uploaded',
-      done:'contract.docx downloaded!',             detail:'6 pages · 185 KB · Private' },
+      done:'contract.docx downloaded!', detail:'6 pages · 185 KB · Private' },
   ];
 
-  var idx    = 0;
-  var urlEl  = document.getElementById('dw-url');
-  var lblEl  = document.getElementById('dw-tool-label');
-  var t0El   = document.getElementById('dw-t0');
-  var t1El   = document.getElementById('dw-t1');
-  var f1El   = document.getElementById('dw-f1');
-  var s1El   = document.getElementById('dw-s1');
-  var row2   = document.getElementById('dw-row2');
-  var t2El   = document.getElementById('dw-t2');
-  var f2El   = document.getElementById('dw-f2');
-  var s2El   = document.getElementById('dw-s2');
-  var runEl  = document.getElementById('dw-run');
-  var procEl = document.getElementById('dw-proc-msg');
-  var doneEl = document.getElementById('dw-done-msg');
-  var detEl  = document.getElementById('dw-done-detail');
+  var idx      = 0;
+  var urlEl    = document.getElementById('dw-url');
+  var lblEl    = document.getElementById('dw-tool-label');
+  var numEl    = document.getElementById('demo-tool-num');
+  var h2El     = document.getElementById('demo-h2');
+  var subEl    = document.getElementById('demo-sub');
+  var ctaEl    = document.getElementById('demo-cta');
+  var trayLbl  = document.getElementById('dw-tray-label');
+  var progFill = document.getElementById('dw-prog-fill');
+  var t0El     = document.getElementById('dw-t0');
+  var t1El     = document.getElementById('dw-t1');
+  var f1El     = document.getElementById('dw-f1');
+  var s1El     = document.getElementById('dw-s1');
+  var row2     = document.getElementById('dw-row2');
+  var t2El     = document.getElementById('dw-t2');
+  var f2El     = document.getElementById('dw-f2');
+  var s2El     = document.getElementById('dw-s2');
+  var runEl    = document.getElementById('dw-run');
+  var procEl   = document.getElementById('dw-proc-msg');
+  var doneEl   = document.getElementById('dw-done-msg');
+  var detEl    = document.getElementById('dw-done-detail');
 
   var TYPE_COLOR = { PDF:'#1f4fd8', JPG:'#ea580c', TXT:'#16a34a', DOC:'#7c3aed' };
   function badgeColor(type) { return TYPE_COLOR[type] || '#1f4fd8'; }
 
+  function reAnim(el) { if (el) { el.style.animationName = 'none'; } }
+  function goAnim(el) { if (el) { el.style.animationName = ''; } }
+
   function apply(t) {
     if (!urlEl) return;
-    urlEl.textContent  = 'paper-press-three.vercel.app/tools/' + t.url;
-    if (lblEl) lblEl.textContent = t.label;
+
+    /* Restart left-side text animations before updating content */
+    reAnim(h2El); reAnim(subEl);
+    urlEl.getBoundingClientRect(); /* reflow — separates name removal from re-add */
+
+    urlEl.textContent = 'paper-press-three.vercel.app/tools/' + t.url;
+    if (lblEl)    lblEl.textContent    = t.label;
+    if (numEl)    numEl.textContent    = (idx + 1) + ' of ' + TOOLS.length;
+    if (h2El)     h2El.textContent     = t.h2;
+    if (subEl)    subEl.textContent    = t.sub;
+    if (ctaEl)  { ctaEl.textContent    = 'Try ' + t.label + ' →'; ctaEl.href = 'tools/' + t.url + '.html'; }
+    if (trayLbl)  trayLbl.textContent  = t.tray;
+
+    goAnim(h2El); goAnim(subEl);
+
+    /* Restart progress bar for next cycle */
+    reAnim(progFill);
+    if (progFill) progFill.getBoundingClientRect();
+    goAnim(progFill);
+
+    /* File badges with format colours */
     var c1 = badgeColor(t.t1);
-    if (t0El)  { t0El.textContent = t.t1; t0El.style.background = c1; }
+    if (t0El) { t0El.textContent = t.t1; t0El.style.background = c1; }
     t1El.textContent = t.t1; t1El.style.background = c1;
-    f1El.textContent = t.f1;  s1El.textContent = t.s1;
+    f1El.textContent = t.f1; s1El.textContent = t.s1;
     row2.style.display = t.two ? '' : 'none';
     var c2 = badgeColor(t.t2);
     t2El.textContent = t.t2; t2El.style.background = c2;
-    f2El.textContent = t.f2;  s2El.textContent = t.s2;
+    f2El.textContent = t.f2; s2El.textContent = t.s2;
     runEl.textContent  = t.btn;
     procEl.textContent = t.proc;
     doneEl.textContent = t.done;

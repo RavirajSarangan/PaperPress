@@ -338,7 +338,7 @@
     font-family: 'Space Grotesk',sans-serif; font-size: clamp(24px,3vw,36px);
     font-weight: 700; letter-spacing: -0.025em; margin-bottom: 12px;
   }
-  .demo-copy > p { font-size: 15px; color: var(--muted); line-height: 1.65; margin-bottom: 24px; }
+  .demo-copy > p, #demo-sub { font-size: 15px; color: var(--muted); line-height: 1.65; margin-bottom: 24px; }
   .demo-steps-list { list-style: none; display: flex; flex-direction: column; gap: 14px; counter-reset: ds; }
   .demo-steps-list li {
     counter-increment: ds; display: flex; align-items: flex-start;
@@ -365,13 +365,41 @@
     box-shadow: 0 12px 48px rgba(31,79,216,.1), 0 2px 8px rgba(0,0,0,.06);
     overflow: hidden; user-select: none;
   }
-  .dw-label-bar { text-align: center; margin-bottom: 8px; }
-  .dw-current-tool {
-    font-size: 11px; font-weight: 700; letter-spacing: .8px;
-    text-transform: uppercase; color: var(--press-blue);
-    background: rgba(31,79,216,.09); padding: 3px 12px; border-radius: 20px;
-    font-family: 'Space Grotesk', sans-serif;
+  /* Left copy — dynamic tool badge */
+  .demo-tool-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(31,79,216,.07); border: 1px solid rgba(31,79,216,.18);
+    border-radius: 20px; padding: 5px 12px 5px 6px; margin-bottom: 18px;
   }
+  .demo-badge-num {
+    font-size: 10px; font-weight: 700; letter-spacing: .4px;
+    background: var(--press-blue); color: #fff;
+    border-radius: 12px; padding: 2px 8px;
+    font-family: 'Space Grotesk',sans-serif;
+  }
+  .demo-badge-name {
+    font-size: 12px; font-weight: 700; color: var(--press-blue);
+    font-family: 'Space Grotesk',sans-serif; letter-spacing: .2px;
+  }
+  /* Animated h2 and sub — restart on each tool switch */
+  #demo-h2  { animation: demo-copy-in .45s ease both; }
+  #demo-sub { animation: demo-copy-in .45s .1s ease both; }
+  @keyframes demo-copy-in {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:none; }
+  }
+  /* CTA button */
+  .demo-cta-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--press-blue); color: #fff;
+    font-family: 'Space Grotesk',sans-serif; font-weight: 700; font-size: 14px;
+    padding: 11px 22px; border-radius: 11px; text-decoration: none;
+    box-shadow: 3px 3px 0 var(--ink); margin-top: 20px;
+    transition: background .15s, transform .12s, box-shadow .12s;
+    animation: demo-copy-in .45s .2s ease both;
+  }
+  .demo-cta-btn:hover  { background: var(--press-blue-dark); }
+  .demo-cta-btn:active { transform: translate(3px,3px); box-shadow: none; }
   .dw-chrome {
     background: #f0f1f3; border-bottom: 1px solid var(--line);
     padding: 10px 14px; display: flex; align-items: center; gap: 10px;
@@ -532,9 +560,19 @@
   .dw-done-msg { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; }
   .dw-done-detail { font-size:11px; color:var(--muted); }
 
+  /* Progress bar at bottom of browser mock */
+  .dw-footer-bar { background: var(--paper); border-top: 1px solid var(--line); }
+  .dw-prog-track { height: 3px; background: var(--line); }
+  .dw-prog-fill {
+    height: 100%; background: var(--press-blue); border-radius: 0 3px 3px 0;
+    animation: dw-prog 9s linear infinite;
+  }
+  @keyframes dw-prog { from { width:0%; } to { width:100%; } }
+
   @media (max-width: 720px) {
     .demo-inner { grid-template-columns: 1fr; }
     .demo-window { max-width: 380px; margin: 0 auto; }
+    .demo-copy > p { margin-bottom: 16px; }
   }
 
   /* ═══════════════════════════════════════════════

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text to PDF — Create a PDF from Typed or Pasted Text Free | PaperPress</title>
+<meta name="description" content="Turn typed or pasted text into a clean, multi-page A4 PDF free in your browser. Title, three fonts, three sizes, proper word wrapping. No upload.">
+<meta name="author" content="Venom X Technology">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1f4fd8">
+<link rel="canonical" href="https://paperpress.venomxtechnology.com/tools/text-to-pdf.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PaperPress by Venom X Technology">
+<meta property="og:title" content="Convert Text to PDF — Free, No Upload">
+<meta property="og:description" content="Turn typed or pasted text into a clean, multi-page A4 PDF free in your browser. Title, three fonts, three sizes, proper word wrapping. No upload.">
+<meta property="og:url" content="https://paperpress.venomxtechnology.com/tools/text-to-pdf.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Convert Text to PDF — Free, No Upload">
+<meta name="twitter:description" content="Turn typed or pasted text into a clean, multi-page A4 PDF free in your browser. Title, three fonts, three sizes, proper word wrapping. No upload.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4fd8'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "PaperPress", "item": "https://paperpress.venomxtechnology.com/"}, {"@type": "ListItem", "position": 2, "name": "Text to PDF", "item": "https://paperpress.venomxtechnology.com/tools/text-to-pdf.html"}]}, {"@type": "SoftwareApplication", "name": "PaperPress Text to PDF", "url": "https://paperpress.venomxtechnology.com/tools/text-to-pdf.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (browser-based)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "creator": {"@type": "Organization", "name": "Venom X Technology", "url": "https://venomxtechnology.com/"}, "description": "Turn typed or pasted text into a clean, multi-page A4 PDF free in your browser. Title, three fonts, three sizes, proper word wrapping. No upload."}, {"@type": "HowTo", "name": "Convert Text to PDF — Free, No Upload", "step": [{"@type": "HowToStep", "position": 1, "text": "Type or paste your text into the editor."}, {"@type": "HowToStep", "position": 2, "text": "Add an optional title and choose font and size."}, {"@type": "HowToStep", "position": 3, "text": "Click Create PDF — a properly paginated A4 PDF downloads."}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "How long can the text be?", "acceptedAnswer": {"@type": "Answer", "text": "Any length — pages are added automatically with correct margins and line spacing."}}, {"@type": "Question", "name": "Does it support Tamil or Sinhala text?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet in this tool — built-in PDF fonts cover Latin scripts only. For Tamil/Sinhala content, the OCR tool’s .docx export preserves Unicode fully."}}]}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
+      <div class="logo-mark" id="logo">P</div>
+      <div>
+        <div class="logo-text">Paper<span>Press</span></div>
+        <div class="logo-by">by <b>Venom X Technology</b></div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#tools">All tools</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">PaperPress</a> › Text to PDF</nav>
+<div class="tool-hero">
+  <h1>Convert Text to PDF — Free, No Upload</h1>
+  <p class="answer">To create a PDF from plain text for free: type or paste your text below, optionally add a title, choose a font and size, and click Create PDF. Text is word-wrapped and paginated into a clean A4 document locally.</p>
+</div>
+<main class="bench">
+<section class="tool-panel" id="text2pdf">
+<div class="field" style="width:100%">
+      <label for="text2pdf-text">Your text</label>
+      <textarea id="text2pdf-text" placeholder="Type or paste anything here — notes, an essay, meeting minutes…"></textarea>
+    </div>
+    <div class="controls">
+      <div class="field">
+        <label for="text2pdf-title">Document title (optional)</label>
+        <input type="text" id="text2pdf-title" placeholder="Untitled" style="min-width:180px" maxlength="60">
+      </div>
+      <div class="field">
+        <label for="text2pdf-fontsize">Text size</label>
+        <select id="text2pdf-fontsize">
+          <option value="10">Small</option>
+          <option value="12" selected>Normal</option>
+          <option value="14">Large</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="text2pdf-font">Font</label>
+        <select id="text2pdf-font">
+          <option value="Helvetica" selected>Sans (Helvetica)</option>
+          <option value="TimesRoman">Serif (Times)</option>
+          <option value="Courier">Mono (Courier)</option>
+        </select>
+      </div>
+      <button class="run-btn" id="text2pdf-run">Create PDF</button>
+    </div>
+    <div class="status" id="text2pdf-status"></div>
+</section>
+</main>
+<section class="howto">
+  <h2>How to use this tool</h2>
+  <ol>
+<li>Type or paste your text into the editor.</li>
+<li>Add an optional title and choose font and size.</li>
+<li>Click Create PDF — a properly paginated A4 PDF downloads.</li>
+  </ol>
+</section>
+<section class="seo-copy">
+  <h2>From clipboard to document</h2>
+  <p>Meeting notes, a quick agreement, instructions for a colleague — sometimes you need a real document without opening a word processor. The generated PDF uses standard fonts so it opens identically everywhere.</p>
+</section>
+<section class="faq">
+  <h2>Frequently asked questions</h2>
+<details><summary>How long can the text be?</summary><p>Any length — pages are added automatically with correct margins and line spacing.</p></details>
+<details><summary>Does it support Tamil or Sinhala text?</summary><p>Not yet in this tool — built-in PDF fonts cover Latin scripts only. For Tamil/Sinhala content, the OCR tool’s .docx export preserves Unicode fully.</p></details>
+</section>
+<section class="related">
+  <h2>Related tools</h2>
+  <div class="grid-cards">
+<a class="tool-card" href="word-to-pdf.html">
+  <div class="ic"><i class="ph ph-file-pdf"></i></div>
+  <h3>Word to PDF</h3>
+  <p>Convert .docx documents to PDF with layout preserved</p>
+</a><a class="tool-card" href="pdf-to-word.html">
+  <div class="ic"><i class="ph ph-file-text"></i></div>
+  <h3>PDF to Word</h3>
+  <p>Turn any PDF into an editable .docx document</p>
+</a><a class="tool-card" href="ocr-pdf.html">
+  <div class="ic"><i class="ph ph-scan"></i></div>
+  <h3>OCR Scan to Text</h3>
+  <p>Read text from scans — English, Tamil & Sinhala</p>
+</a>
+  </div>
+</section>
+<footer>
+  <div class="credit">Built with care by <a href="https://www.saranganraviraj.com/" rel="author">Venom X Technology</a> 🇱🇰</div>
+
+</footer>
+<script src="../assets/app.js"></script>
+
+
+</body>
+</html>

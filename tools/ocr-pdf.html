@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free OCR Online — Scanned PDF &amp; Image to Text in English, Tamil, Sinhala | PaperPress</title>
+<meta name="description" content="Extract text from scanned PDFs and photos free, in English, Tamil (தமிழ்) and Sinhala (සිංහල). Runs locally with Tesseract — no upload, no signup. Export to TXT or DOCX.">
+<meta name="author" content="Venom X Technology">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1f4fd8">
+<link rel="canonical" href="https://paperpress.venomxtechnology.com/tools/ocr-pdf.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PaperPress by Venom X Technology">
+<meta property="og:title" content="OCR for Scanned PDFs &amp; Photos — English, தமிழ் &amp; සිංහල">
+<meta property="og:description" content="Extract text from scanned PDFs and photos free, in English, Tamil (தமிழ்) and Sinhala (සිංහල). Runs locally with Tesseract — no upload, no signup. Export to TXT or DOCX.">
+<meta property="og:url" content="https://paperpress.venomxtechnology.com/tools/ocr-pdf.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OCR for Scanned PDFs &amp; Photos — English, தமிழ் &amp; සිංහල">
+<meta name="twitter:description" content="Extract text from scanned PDFs and photos free, in English, Tamil (தமிழ்) and Sinhala (සිංහල). Runs locally with Tesseract — no upload, no signup. Export to TXT or DOCX.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4fd8'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "PaperPress", "item": "https://paperpress.venomxtechnology.com/"}, {"@type": "ListItem", "position": 2, "name": "OCR Scan to Text", "item": "https://paperpress.venomxtechnology.com/tools/ocr-pdf.html"}]}, {"@type": "SoftwareApplication", "name": "PaperPress OCR Scan to Text", "url": "https://paperpress.venomxtechnology.com/tools/ocr-pdf.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (browser-based)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "creator": {"@type": "Organization", "name": "Venom X Technology", "url": "https://venomxtechnology.com/"}, "description": "Extract text from scanned PDFs and photos free, in English, Tamil (தமிழ்) and Sinhala (සිංහල). Runs locally with Tesseract — no upload, no signup. Export to TXT or DOCX."}, {"@type": "HowTo", "name": "OCR for Scanned PDFs & Photos — English, தமிழ் & සිංහල", "step": [{"@type": "HowToStep", "position": 1, "text": "Drop a scanned PDF, JPG, or PNG into the tray."}, {"@type": "HowToStep", "position": 2, "text": "Select the document language — including Tamil, Sinhala, and mixed modes."}, {"@type": "HowToStep", "position": 3, "text": "Click Read text, then review, copy, or export the result as .txt or .docx."}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Which languages are supported?", "acceptedAnswer": {"@type": "Answer", "text": "English, Tamil (தமிழ்), Sinhala (සිංහල), plus English+Tamil and English+Sinhala mixed modes."}}, {"@type": "Question", "name": "Why does the first run take longer?", "acceptedAnswer": {"@type": "Answer", "text": "The language model (a few MB) downloads on first use and is then cached by your browser. The recognition itself always runs locally."}}, {"@type": "Question", "name": "How do I get the best accuracy?", "acceptedAnswer": {"@type": "Answer", "text": "Use a clear, well-lit, high-contrast scan, keep the page straight, and pick the correct language mode."}}]}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
+      <div class="logo-mark" id="logo">P</div>
+      <div>
+        <div class="logo-text">Paper<span>Press</span></div>
+        <div class="logo-by">by <b>Venom X Technology</b></div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#tools">All tools</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">PaperPress</a> › OCR Scan to Text</nav>
+<div class="tool-hero">
+  <h1>OCR for Scanned PDFs & Photos — English, தமிழ் & සිංහල</h1>
+  <p class="answer">To extract text from a scanned PDF or photo for free: drop the file below, choose the language (English, Tamil, Sinhala, or mixed), and click Read text. Recognition runs locally with Tesseract — one of the few online OCR tools that handles Tamil and Sinhala without uploading your document anywhere.</p>
+</div>
+<main class="bench">
+<section class="tool-panel" id="ocr">
+<div class="tray" data-input="ocr-input" tabindex="0" role="button" aria-label="Add a scanned PDF or photo">
+      <div class="tray-sheet"><div class="fold"></div></div>
+      <h3>Drop a scanned PDF or photo here</h3>
+      <p>or <b>browse files</b> — PDF, JPG, or PNG</p>
+      <input type="file" id="ocr-input" accept="application/pdf,image/jpeg,image/png">
+    </div>
+    <div class="files" id="ocr-files"></div>
+    <div class="controls">
+      <div class="field">
+        <label for="ocr-lang">Language</label>
+        <select id="ocr-lang">
+          <option value="eng" selected>English</option>
+          <option value="tam">Tamil — தமிழ்</option>
+          <option value="sin">Sinhala — සිංහල</option>
+          <option value="eng+tam">English + Tamil</option>
+          <option value="eng+sin">English + Sinhala</option>
+        </select>
+      </div>
+      <button class="run-btn" id="ocr-run" disabled>Read text</button>
+    </div>
+    <div class="status" id="ocr-status"></div>
+    <div id="ocr-output-wrap" style="display:none">
+      <div class="field" style="margin-top:14px">
+        <label for="ocr-output">Recognized text (editable)</label>
+        <textarea id="ocr-output" spellcheck="false"></textarea>
+      </div>
+      <div class="controls" style="margin-top:10px">
+        <button class="ghost-btn" id="ocr-copy">Copy text</button>
+        <button class="ghost-btn" id="ocr-txt">Download .txt</button>
+        <button class="ghost-btn" id="ocr-docx">Download .docx</button>
+      </div>
+    </div>
+    <p class="hint">First run downloads the language data (a few MB, then cached). Clear, high-contrast scans give the best results. OCR runs locally — your document still never leaves the device.</p>
+</section>
+</main>
+<section class="howto">
+  <h2>How to use this tool</h2>
+  <ol>
+<li>Drop a scanned PDF, JPG, or PNG into the tray.</li>
+<li>Select the document language — including Tamil, Sinhala, and mixed modes.</li>
+<li>Click Read text, then review, copy, or export the result as .txt or .docx.</li>
+  </ol>
+</section>
+<section class="seo-copy">
+  <h2>OCR for Sri Lankan documents</h2>
+  <p>Most free OCR sites support only Latin scripts, and the ones that handle Tamil or Sinhala require uploading your document to a server. PaperPress runs Tesseract — the open-source engine originally developed at HP and Google — directly in your browser via WebAssembly, with trained models for both languages. That makes it suitable for digitising old letters, government forms, certificates, and textbook pages without privacy concerns.</p>
+</section>
+<section class="faq">
+  <h2>Frequently asked questions</h2>
+<details><summary>Which languages are supported?</summary><p>English, Tamil (தமிழ்), Sinhala (සිංහල), plus English+Tamil and English+Sinhala mixed modes.</p></details>
+<details><summary>Why does the first run take longer?</summary><p>The language model (a few MB) downloads on first use and is then cached by your browser. The recognition itself always runs locally.</p></details>
+<details><summary>How do I get the best accuracy?</summary><p>Use a clear, well-lit, high-contrast scan, keep the page straight, and pick the correct language mode.</p></details>
+</section>
+<section class="related">
+  <h2>Related tools</h2>
+  <div class="grid-cards">
+<a class="tool-card" href="jpg-to-pdf.html">
+  <div class="ic"><i class="ph ph-images"></i></div>
+  <h3>Images to PDF</h3>
+  <p>Combine JPG, PNG & WebP photos into one PDF</p>
+</a><a class="tool-card" href="pdf-to-jpg.html">
+  <div class="ic"><i class="ph ph-image"></i></div>
+  <h3>PDF to Images</h3>
+  <p>Export every PDF page as PNG or JPG</p>
+</a><a class="tool-card" href="merge-pdf.html">
+  <div class="ic"><i class="ph ph-git-merge"></i></div>
+  <h3>Merge PDF</h3>
+  <p>Join multiple PDFs into one, in your order</p>
+</a>
+  </div>
+</section>
+<footer>
+  <div class="credit">Built with care by <a href="https://www.saranganraviraj.com/" rel="author">Venom X Technology</a> 🇱🇰</div>
+
+</footer>
+<script src="../assets/app.js"></script>
+
+
+</body>
+</html>

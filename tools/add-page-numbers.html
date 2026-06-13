@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Page Numbers to PDF Free Online (No Upload) | PaperPress</title>
+<meta name="description" content="Add page numbers to a PDF free in your browser. Formats 1,2,3 / Page 1 of N / — 1 —, three positions, custom start number. No upload.">
+<meta name="author" content="Venom X Technology">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#1f4fd8">
+<link rel="canonical" href="https://paperpress.venomxtechnology.com/tools/add-page-numbers.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PaperPress by Venom X Technology">
+<meta property="og:title" content="Add Page Numbers to PDF — Free, No Upload">
+<meta property="og:description" content="Add page numbers to a PDF free in your browser. Formats 1,2,3 / Page 1 of N / — 1 —, three positions, custom start number. No upload.">
+<meta property="og:url" content="https://paperpress.venomxtechnology.com/tools/add-page-numbers.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Add Page Numbers to PDF — Free, No Upload">
+<meta name="twitter:description" content="Add page numbers to a PDF free in your browser. Formats 1,2,3 / Page 1 of N / — 1 —, three positions, custom start number. No upload.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f4fd8'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='bold' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "PaperPress", "item": "https://paperpress.venomxtechnology.com/"}, {"@type": "ListItem", "position": 2, "name": "Page Numbers", "item": "https://paperpress.venomxtechnology.com/tools/add-page-numbers.html"}]}, {"@type": "SoftwareApplication", "name": "PaperPress Page Numbers", "url": "https://paperpress.venomxtechnology.com/tools/add-page-numbers.html", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (browser-based)", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "creator": {"@type": "Organization", "name": "Venom X Technology", "url": "https://venomxtechnology.com/"}, "description": "Add page numbers to a PDF free in your browser. Formats 1,2,3 / Page 1 of N / — 1 —, three positions, custom start number. No upload."}, {"@type": "HowTo", "name": "Add Page Numbers to PDF — Free, No Upload", "step": [{"@type": "HowToStep", "position": 1, "text": "Drop your PDF into the tray."}, {"@type": "HowToStep", "position": 2, "text": "Pick the number format, position, and starting value."}, {"@type": "HowToStep", "position": 3, "text": "Click Add numbers and download the numbered PDF."}]}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Can numbering start from a number other than 1?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — set any starting value, useful when the document continues from another file."}}, {"@type": "Question", "name": "Which positions are available?", "acceptedAnswer": {"@type": "Answer", "text": "Bottom centre, bottom right, and top right."}}]}]}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit">
+      <div class="logo-mark" id="logo">P</div>
+      <div>
+        <div class="logo-text">Paper<span>Press</span></div>
+        <div class="logo-by">by <b>Venom X Technology</b></div>
+      </div>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#tools">All tools</a>
+      <a href="../index.html#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">PaperPress</a> › Page Numbers</nav>
+<div class="tool-hero">
+  <h1>Add Page Numbers to PDF — Free, No Upload</h1>
+  <p class="answer">To add page numbers to a PDF for free: drop it below, choose a format (1, 2, 3… / Page 1 of N / — 1 —), a position, and the starting number, then click Add numbers. Numbering is stamped into every page locally.</p>
+</div>
+<main class="bench">
+<section class="tool-panel" id="pagenum">
+<div class="tray" data-input="pagenum-input" tabindex="0" role="button" aria-label="Add a PDF to number">
+      <div class="tray-sheet"><div class="fold"></div></div>
+      <h3>Drop a PDF here</h3>
+      <p>or <b>browse files</b> — numbering is added to every page</p>
+      <input type="file" id="pagenum-input" accept="application/pdf">
+    </div>
+    <div class="files" id="pagenum-files"></div>
+    <div class="controls">
+      <div class="field">
+        <label for="pagenum-format">Format</label>
+        <select id="pagenum-format">
+          <option value="n" selected>1, 2, 3…</option>
+          <option value="ofN">Page 1 of N</option>
+          <option value="dash">— 1 —</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="pagenum-pos">Position</label>
+        <select id="pagenum-pos">
+          <option value="bc" selected>Bottom center</option>
+          <option value="br">Bottom right</option>
+          <option value="tr">Top right</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="pagenum-start">Start at</label>
+        <input type="number" id="pagenum-start" value="1" min="0" max="9999" style="min-width:90px">
+      </div>
+      <button class="run-btn" id="pagenum-run" disabled>Add numbers</button>
+    </div>
+    <div class="status" id="pagenum-status"></div>
+</section>
+</main>
+<section class="howto">
+  <h2>How to use this tool</h2>
+  <ol>
+<li>Drop your PDF into the tray.</li>
+<li>Pick the number format, position, and starting value.</li>
+<li>Click Add numbers and download the numbered PDF.</li>
+  </ol>
+</section>
+<section class="seo-copy">
+  <h2>Required by examiners, loved by readers</h2>
+  <p>Universities and courts commonly require numbered pages, and anyone assembling a merged document benefits from continuous numbering. The Page 1 of N format also guards against missing pages.</p>
+</section>
+<section class="faq">
+  <h2>Frequently asked questions</h2>
+<details><summary>Can numbering start from a number other than 1?</summary><p>Yes — set any starting value, useful when the document continues from another file.</p></details>
+<details><summary>Which positions are available?</summary><p>Bottom centre, bottom right, and top right.</p></details>
+</section>
+<section class="related">
+  <h2>Related tools</h2>
+  <div class="grid-cards">
+<a class="tool-card" href="edit-pdf-metadata.html">
+  <div class="ic"><i class="ph ph-tag"></i></div>
+  <h3>Edit Metadata</h3>
+  <p>Edit title, author, subject & keywords</p>
+</a><a class="tool-card" href="text-to-pdf.html">
+  <div class="ic"><i class="ph ph-article"></i></div>
+  <h3>Text to PDF</h3>
+  <p>Type or paste text, get a clean PDF</p>
+</a><a class="tool-card" href="word-to-pdf.html">
+  <div class="ic"><i class="ph ph-file-pdf"></i></div>
+  <h3>Word to PDF</h3>
+  <p>Convert .docx documents to PDF with layout preserved</p>
+</a>
+  </div>
+</section>
+<footer>
+  <div class="credit">Built with care by <a href="https://www.saranganraviraj.com/" rel="author">Venom X Technology</a> 🇱🇰</div>
+
+</footer>
+<script src="../assets/app.js"></script>
+
+
+</body>
+</html>
